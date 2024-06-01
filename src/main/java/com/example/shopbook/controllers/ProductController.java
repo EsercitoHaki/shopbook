@@ -39,6 +39,11 @@ public class ProductController {
             List<MultipartFile> files = productDTO.getFiles();
             files = files == null ? new ArrayList<MultipartFile>() : files;
             for (MultipartFile file : files){
+                //Tránh trường hợp không truyền vào file thì nó nhận giá trị "" thì nó vẫn duyệt qua vòng lặp
+                if (file.getSize() == 0)
+                {
+                    continue;
+                }
                 //Kiểm tra kích thước file và định dạng
                 if (file.getSize() > 10 * 1024 * 1024){ //Kích thước > 10MB
                     return ResponseEntity.status(HttpStatus.PAYLOAD_TOO_LARGE)
