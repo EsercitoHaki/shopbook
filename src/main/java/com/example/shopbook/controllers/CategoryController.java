@@ -5,14 +5,12 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/categories")
-//@Validated
+@RequestMapping("${api.prefix}/categories")
 public class CategoryController {
     //Hiển thị tất cả các category
     @GetMapping("") //http://localhost:8088/api/v1/categories?page=1&limit=10
