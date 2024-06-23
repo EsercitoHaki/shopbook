@@ -1,7 +1,10 @@
 package com.example.shopbook.controllers;
 
 import com.example.shopbook.dtos.CategoryDTO;
+import com.example.shopbook.models.Category;
+import com.example.shopbook.serviecs.CategoryService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -11,19 +14,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("${api.prefix}/categories")
+//Dependency Injection
+@RequiredArgsConstructor
 public class CategoryController {
-    //Hiển thị tất cả các category
-    @GetMapping("") //http://localhost:8088/api/v1/categories?page=1&limit=10
-    public ResponseEntity<String> getAllCategories(
-            @RequestParam("page") int page,
-            @RequestParam("limit") int limit
-    ){
-        return ResponseEntity.ok(String.format("getAllCategories , page = %d, limit = %d", page, limit));
-    }
+    private final CategoryService categoryService;
 
     @PostMapping("")
     //Nếu tham số truyn vào là 1 object thì sao ? => Data Transfer Object = Request Object
-    public ResponseEntity<?> insertCategory(
+    public ResponseEntity<?> createCategory(
             @Valid @RequestBody CategoryDTO categoryDTO,
             BindingResult result){
         if (result.hasErrors()){
@@ -33,16 +31,33 @@ public class CategoryController {
                     .toList();
             return ResponseEntity.badRequest().body(errorMessages);
         }
-        return ResponseEntity.ok("This is insertCategory " + categoryDTO);
+        categoryService.createCategory(categoryDTO);
+        return ResponseEntity.ok("Thêm mới danh mục thành công");
     }
 
+    //Hiển thị tất cả các category
+    @GetMapping("") //http://localhost:8088/api/v1/categories?page=1&limit=10
+    public ResponseEntity<List<Category>> getAllCategories(
+            @RequestParam("page") int page,
+            @RequestParam("limit") int limit
+    ){
+        List<Category> categories = categoryService.getAllCategories();
+        return ResponseEntity.ok(categories);
+    }
+
+
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateCategory(@PathVariable Long id){
-        return ResponseEntity.ok("This is insertCategory = " + id);
+    public ResponseEntity<String> updateCategory(
+            @PathVariable Long id,
+            @Valid @RequestBody CategoryDTO categoryDTO
+    ){
+        categoryService.updateCategory(id, categoryDTO);
+        return ResponseEntity.ok("Cập nhật category thành công");
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCategory(@PathVariable Long id){
-        return ResponseEntity.ok("deleteCategory with id = " + id);
+        categoryService.deleteCategory(id);
+        return ResponseEntity.ok("Xoá category có id: " + id + "thành công");
     }
 }
