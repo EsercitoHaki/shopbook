@@ -1,4 +1,4 @@
-package com.example.shopbook.serviecs;
+package com.example.shopbook.services;
 
 import com.example.shopbook.dtos.UserDTO;
 import com.example.shopbook.exceptions.DataNotFoundException;

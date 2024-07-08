@@ -1,7 +1,7 @@
 package com.example.shopbook.controllers;
 
 import com.example.shopbook.dtos.*;
-import com.example.shopbook.serviecs.UserService;
+import com.example.shopbook.services.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

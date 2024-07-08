@@ -1,40 +1,39 @@
-package com.example.shopbook.dtos;
+package com.example.shopbook.responses;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-import lombok.*;
+import jakarta.persistence.Column;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
-@Data
-@Builder
 @AllArgsConstructor
+@Builder
 @NoArgsConstructor
-@Getter
-@Setter
-public class OrderDTO {
+public class OrderResponse extends BaseResponse{
+    private Long id;
+
     @JsonProperty("user_id")
-    @Min(value = 1, message = "User ID phải lớn hơn 1")
     private Long userId;
 
     @JsonProperty("fullname")
     private String fullName;
 
-    private String email;
-
     @JsonProperty("phone_number")
-    @Size(min = 5, message = "Số điện thoại phải trên 5 ký tự")
-    @NotBlank(message = "Số điện thoại không được để trống")
     private String phoneNumber;
 
     private String address;
 
     private String note;
 
+    @JsonProperty("order_date")
+    private LocalDateTime orderDate;
+
+    private String status;
+
     @JsonProperty("total_money")
-    @Min(value = 0, message = "Tổng tiền phải lớn hơn 0")
     private Float totalMoney;
 
     @JsonProperty("shipping_method")
@@ -46,7 +45,12 @@ public class OrderDTO {
     @JsonProperty("shipping_date")
     private Date shippingDate;
 
+    @JsonProperty("tracking_number")
+    private String trackingNumber;
+
     @JsonProperty("payment_method")
     private String paymentMethod;
 
+    @JsonProperty("active")
+    private Boolean active;//thuộc về admin
 }

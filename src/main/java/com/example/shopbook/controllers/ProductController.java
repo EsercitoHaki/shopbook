@@ -6,7 +6,7 @@ import com.example.shopbook.models.Product;
 import com.example.shopbook.models.ProductImage;
 import com.example.shopbook.responses.ProductListResponse;
 import com.example.shopbook.responses.ProductResponse;
-import com.example.shopbook.serviecs.IProductService;
+import com.example.shopbook.services.IProductService;
 import com.github.javafaker.Faker;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -159,13 +159,35 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<String> getProductById(@PathVariable("id") String productId){
-        return ResponseEntity.ok("Product with ID: " +productId);
+    public ResponseEntity<?> getProductById(@PathVariable("id") Long productId){
+        try {
+            Product existingProduct = productService.getProductById(productId);
+            return ResponseEntity.ok(ProductResponse.fromProduct(existingProduct));
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteProduct(@PathVariable Long id){
-        return ResponseEntity.ok(String.format("Product with id = %d deleted successfully", id));
+        try {
+            productService.deleteProduct(id);
+            return ResponseEntity.ok(String.format("Product with id = %d deleted successfully", id));
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    //update a product
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateProduct(@PathVariable long id,
+                                           @RequestBody ProductDTO productDTO){
+        try {
+            Product updatedProduct = productService.updateProduct(id, productDTO);
+            return ResponseEntity.ok(updatedProduct);
+        }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
     //Thêm dữ liệu fake vào trong bảng

@@ -2,7 +2,7 @@ package com.example.shopbook.controllers;
 
 import com.example.shopbook.dtos.CategoryDTO;
 import com.example.shopbook.models.Category;
-import com.example.shopbook.serviecs.CategoryService;
+import com.example.shopbook.services.CategoryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

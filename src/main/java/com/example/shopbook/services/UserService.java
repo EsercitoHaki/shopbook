@@ -1,4 +1,4 @@
-package com.example.shopbook.serviecs;
+package com.example.shopbook.services;
 
 import com.example.shopbook.dtos.UserDTO;
 import com.example.shopbook.exceptions.DataNotFoundException;
@@ -8,7 +8,9 @@ import com.example.shopbook.repositories.RoleRepository;
 import com.example.shopbook.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.stereotype.Service;
 
+@Service
 @RequiredArgsConstructor
 public class UserService implements IUserService{
     private UserRepository userRepository;
