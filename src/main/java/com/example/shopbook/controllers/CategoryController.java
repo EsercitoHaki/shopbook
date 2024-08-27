@@ -45,7 +45,6 @@ public class CategoryController {
         return ResponseEntity.ok(categories);
     }
 
-
     @PutMapping("/{id}")
     public ResponseEntity<String> updateCategory(
             @PathVariable Long id,
